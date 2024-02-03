@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Транзакції</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/styles.css' %}"
+    />
+    <script src="{% static 'js/script.js' %}"></script>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://img.icons8.com/material/24/economic-improvement--v2.png"
+    />
+  </head>
+  <body>
+    <div class="top-menu">
+      <div class="menu-section">
+        <button class="menu-button">BABULES</button>
+      </div>
+      <div class="menu-section">
+        <button
+          class="menu-button"
+          onclick="toggleSubMenu('categoriesSubMenu')"
+        >
+          Categories ↴
+        </button>
+        <ul class="sub-menu" id="categoriesSubMenu">
+          <li><a href="{% url 'category_list' %}">Доходи/витрати</a></li>
+          <li><a href="{% url 'transactions' %}">Транзакції</a></li>
+        </ul>
+      </div>
+      <div class="menu-section">
+        <button
+          class="menu-button"
+          onclick="toggleSubMenu('activitiesSubMenu')"
+        >
+          Activities ↴
+        </button>
+        <ul class="sub-menu" id="activitiesSubMenu">
+          <li><a href="{% url 'report_generator' %}">Генератор звітів</a></li>
+          <li><a href="#">Activity 2</a></li>
+        </ul>
+      </div>
+      <div class="menu-section">
+        <button class="menu-button" onclick="toggleSubMenu('helpSubMenu')">
+          Допомога ↴
+        </button>
+        <ul class="sub-menu" id="helpSubMenu">
+          <li><a href="#">Питання та відповіді</a></li>
+          <li><a href="#">Контакти</a></li>
+        </ul>
+      </div>
+      <div class="menu-section">
+        <button class="menu-button" onclick="toggleSubMenu('profileSubMenu')">
+          admin ↴
+        </button>
+        <ul class="sub-menu" id="profileSubMenu">
+          <li><a href="#">Профіль</a></li>
+          <li><a href="#">Налаштування</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>Транзакції</h2>
+      <div class="content-background">
+        <div class="search-container">
+          <input
+            type="text"
+            id="search"
+            name="search"
+            placeholder="<Фільтр по категоріям>"
+          />
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Категорія</th>
+              <th>Тип операції</th>
+              <th>Сума</th>
+              <th>Дата</th>
+              <th>Опис</th>
+              <th>Управління</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for transaction in transactions %}
+            <tr id="row-{{ transaction.id }}">
+              <td class="numbering-column">{{ forloop.counter }}</td>
+              <td class="name-column">{{ transaction.category.name }}</td>
+              <td class="description-column">{{ transaction.operation_type }}</td>
+              <td class="description-column">{{ transaction.amount }}</td>
+              <td class="description-column">{{ transaction.date }}</td>
+              <td class="description-column">{{ transaction.description }}</td>
+              <td class="action-column">
+                <div class="edit-delete-container">
+                  <a href="{% url 'edit_transaction' transaction.id %}" class="action-button">
+                    <img src="{% static 'images/edit_icon.png' %}" alt="Редагувати">
+                  </a>
+                  <a href="{% url 'confirm_del_transactions' transaction_id=transaction.id %}" class="action-button delete-button">
+                    <img src="{% static 'images/delete_icon.png' %}" alt="Видалити">
+                </a>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <ul>
+          <li>
+            <a href="{% url 'add_transaction' %}" class="add-category-btn">
+              Додати нову транзакцію
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+  </html>

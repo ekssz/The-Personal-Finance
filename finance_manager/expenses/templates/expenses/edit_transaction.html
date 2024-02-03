@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редагування інформації про транзакції</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script>
+        $(function () {
+            $("#id_date").datepicker({ dateFormat: "yy-mm-dd" });
+        });
+    </script>
+</head>
+<body>
+    <div class="top-menu">
+        <div class="menu-section">
+          <button class="menu-button">BABULES</button>
+        </div>
+        <div class="menu-section">
+          <button
+            class="menu-button"
+            onclick="toggleSubMenu('categoriesSubMenu')"
+          >
+            Categories ↴
+          </button>
+          <ul class="sub-menu" id="categoriesSubMenu">
+            <li><a href="{% url 'category_list' %}">Доходи/витрати</a></li>
+            <li><a href="{% url 'transactions' %}">Транзації</a></li>
+          </ul>
+        </div>
+        <div class="menu-section">
+          <button
+            class="menu-button"
+            onclick="toggleSubMenu('activitiesSubMenu')"
+          >
+            Activities ↴
+          </button>
+          <ul class="sub-menu" id="activitiesSubMenu">
+            <li><a href="{% url 'report_generator' %}">Генератор звітів</a></li>
+            <li><a href="#">Activity 2</a></li>
+          </ul>
+        </div>
+        <div class="menu-section">
+          <button class="menu-button" onclick="toggleSubMenu('helpSubMenu')">
+            Допомога ↴
+          </button>
+          <ul class="sub-menu" id="helpSubMenu">
+            <li><a href="#">Питання та відповіді</a></li>
+            <li><a href="#">Контакти</a></li>
+          </ul>
+        </div>
+        <div class="menu-section">
+          <button class="menu-button" onclick="toggleSubMenu('profileSubMenu')">
+            admin ↴
+          </button>
+          <ul class="sub-menu" id="profileSubMenu">
+            <li><a href="#">Профіль</a></li>
+            <li><a href="#">Налаштування</a></li>
+          </ul>
+        </div>
+      </div>  
+    </div>
+    <div class="container">
+        <h2>Редагування інформації про транзакцію</h2>
+        <form method="post" action="{% url 'edit_transaction' transaction.id %}" class="form-field">
+            {% csrf_token %}
+            <div class="content-background">
+                <div class="form-table">
+                    <div class="form-row">
+                        <div class="form-cell">
+                            <label for="{{ form.category.id_for_label }}">Назва категорії</label>
+                        </div>
+                        <div class="form-cell">
+                            {{ form.category }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-cell">
+                            <label for="{{ form.operation_type.id_for_label }}">Тип операції</label>
+                        </div>
+                        <div class="form-cell">
+                            {{ form.operation_type }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-cell">
+                            <label for="{{ form.amount.id_for_label }}">Сума</label>
+                        </div>
+                        <div class="form-cell">
+                            {{ form.amount }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-cell">
+                            <label for="{{ form.date.id_for_label }}">Дата YYYY-MM-DD</label>
+                        </div>
+                        <div class="form-cell">
+                            {{ form.date }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-cell">
+                            <label for="{{ form.description.id_for_label }}">Опис</label>
+                        </div>
+                        <div class="form-cell">
+                            {{ form.description }}
+                        </div>
+                    </div>
+                        <button type="submit" class="reset-button">Зберегти</button>
+                        <a href="{% url 'transactions' %}" class="reset-button">Повернутись</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,277 @@
+.top-menu {
+    background-color: #000;
+    color: #808080;
+    padding: 10px 0;
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.menu-section {
+    display: table-cell;
+    padding: 5px 5px;
+    border-right: 1px solid #555050;
+}
+
+.menu-button {
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.sub-menu {
+    display: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    background-color: #000;
+    border: 1px solid #808080;
+    z-index: 2;
+}
+
+.sub-menu li {
+    padding: 10px;
+    border-bottom: 1px solid #808080;
+}
+
+.sub-menu li a {
+    color: #808080;
+    text-decoration: none;
+    display: block;
+}
+
+.menu-section:hover .sub-menu {
+    display: block;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.container {
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+#search {
+    width: 30%;
+    padding: 8px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    text-align: left;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.action-column img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    transition: transform 0.5s ease-in-out;
+}
+
+.action-column img:hover {
+    transform: rotate(360deg);
+}
+
+.add-category-btn,
+.reset-button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 10px;
+    border-radius: 5px;
+    border: none;
+    text-decoration: none;
+    margin-right: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.chart-button {
+    background-color: #22be1d;
+    color: #fff;
+    padding: 10px 10px;
+    border-radius: 5px;
+    border: none;
+    text-decoration: none;
+    margin-right: 15px;
+    font-size: 16px;
+    cursor: pointer;
+
+}
+
+.date-button {
+    background-color: #c51414;
+    color: #fff;
+    padding: 10px 10px;
+    border-radius: 5px;
+    border: none;
+    text-decoration: none;
+    margin-right: 15px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.diagram-button {
+    border-radius: 5px;
+    border: none;
+    text-decoration: none;
+    margin-right: 15px;
+    cursor: pointer;
+    height: 20px; 
+    width: 20px;
+    padding: 0; 
+    background-color: transparent; 
+}
+
+.diagram-button img {
+    height: 20px; 
+    width: 20px; 
+}
+
+.add-category-btn:hover,
+.reset-button:hover {
+    background-color: #2980b9;
+    color: #eee;
+}
+
+.form-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+.form-row {
+    display: table-row;
+}
+
+.form-cell {
+    display: table-cell;
+    padding: 8px;
+    vertical-align: middle;
+}
+
+.form-field label {
+    display: block; 
+    margin-bottom: 5px;
+}
+
+.form-field input[type="text"],
+.form-field input[type="number"],
+.form-field select,
+.form-field textarea,
+.form-field .description-field {
+    width: 100%;
+    height: 35px; 
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    resize: none; 
+}
+.content-background {
+    background-color: #f4f4f4; 
+    border-radius: 20px; 
+    padding: 20px; 
+    margin: 20px; 
+    max-width: 1080px; 
+}
+
+.edit-delete-container {
+    display: flex;
+}
+
+.action-button {
+    margin-right: 10px;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* modal window */
+.modal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-overflow-scrolling: touch;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.modal-content {
+    width: 80%;
+    max-width: 400px; 
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 101;
+}
+
+#id_date_from, #id_date_to, #id_operation_type, #id_category {
+    width: 250px;
+    height: 35px;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+body.report-template .content-container {
+    display: flex;
+    max-width: 1080px;
+    margin: 0 auto; 
+}
+
+body.report-template .table-container {
+    max-width: 50%; 
+}
+
+body.report-template .table-background {
+    background-color: #f4f4f4;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px;
+    box-sizing: border-box;
+}
+
+body.report-template #container {
+    flex: 2; 
+    max-width: 70%; 
+}
+

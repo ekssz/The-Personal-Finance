@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реєстрація інформації про категорію доходів / витрат</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/material/24/economic-improvement--v2.png">
+</head>
+    <body>
+    <div class="top-menu">
+        <div class="menu-section">
+            <button class="menu-button">BABULES</button>
+        </div>
+        <div class="menu-section">
+            <button class="menu-button" onclick="toggleSubMenu('categoriesSubMenu')">Categories ↴</button>
+            <ul class="sub-menu" id="categoriesSubMenu">
+                <li><a href="{% url 'category_list' %}">Доходи/Витрати</a></li>
+                <li><a href="{% url 'transactions' %}">Транзації</a></li>
+            </ul>
+        </div>
+        <div class="menu-section">
+            <button class="menu-button" onclick="toggleSubMenu('activitiesSubMenu')">Activities ↴</button>
+            <ul class="sub-menu" id="activitiesSubMenu">
+                <li><a href="{% url 'report_generator' %}">Генератор звітів</a></li>
+                <li><a href="#">Activity 2</a></li>
+            </ul>
+        </div>
+        <div class="menu-section">
+            <button class="menu-button" onclick="toggleSubMenu('helpSubMenu')">Допомога ↴</button>
+            <ul class="sub-menu" id="helpSubMenu">
+                <li><a href="#">Питання та відповіді</a></li>
+                <li><a href="#">Контакти</a></li>
+            </ul>
+        </div>
+        <div class="menu-section">
+            <button class="menu-button" onclick="toggleSubMenu('profileSubMenu')">admin ↴</button>
+            <ul class="sub-menu" id="profileSubMenu">
+                <li><a href="#">Профіль</a></li>
+                <li><a href="#">Інші сторінки</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Реєстрація інформації про категорію доходів / витрат</h2>
+        <div class = "content-background">
+        <form method="post" action="{% url 'add_category' %}" class="form-field">
+            {% csrf_token %}
+            <div class="form-table">
+                <div class="form-row">
+                    <div class="form-cell">
+                        <label for="{{ form.name.id_for_label }}">Назва категорії</label>
+                    </div>
+                    <div class="form-cell">
+                        {{ form.name }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-cell">
+                        <label for="{{ form.description.id_for_label }}">Короткий опис</label>
+                    </div>
+                    <div class="form-cell">
+                        {{ form.description }}
+                    </div>
+                </div>
+                    <button type="submit" class="reset-button">Зберегти</button>
+                    <a href="{% url 'category_list' %}" class="reset-button">Повернутись</a>
+                </div>
+            </div>
+        </form>
+        </div>
+    </body>
+</html>
+

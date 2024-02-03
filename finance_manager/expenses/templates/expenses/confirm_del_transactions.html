@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Підтвердження</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+</head>
+<body>
+  <div id="confirmationModal" class="modal">
+    <div class="modal-content">
+      <form id="confirmation_form" method="post" action="{% url 'delete_transaction' transaction_id=transaction.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="transaction_id" id="transaction_id_input" value="{{ transaction.id }}">
+        <h2>Ви впевнені, що хочете видалити цю транзакцію?</h2>
+        <button type="submit" class="delete-transaction-button action-button delete-button reset-button" onclick="deleteTransaction()">Так</button>
+        <a href="{% url 'transactions' %}" class="action-button delete-button reset-button">Ні</a>
+      </form>      
+    </div>
+  </div>
+    
+</body>
+</html>
+

@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор звітів</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/material/24/economic-improvement--v2.png">
+
+</head>
+<body class="report-template">
+    <div class="top-menu">
+        <div class="menu-section">
+          <button class="menu-button">BABULES</button>
+        </div>
+        <div class="menu-section">
+          <button
+            class="menu-button"
+            onclick="toggleSubMenu('categoriesSubMenu')"
+          >
+            Categories ↴
+          </button>
+          <ul class="sub-menu" id="categoriesSubMenu">
+            <li><a href="{% url 'category_list' %}">Доходи/витрати</a></li>
+            <li><a href="{% url 'transactions' %}">Транзації</a></li>
+          </ul>
+        </div>
+        <div class="menu-section">
+          <button
+            class="menu-button"
+            onclick="toggleSubMenu('activitiesSubMenu')"
+          >
+            Activities ↴
+          </button>
+          <ul class="sub-menu" id="activitiesSubMenu">
+            <li><a href="{% url 'report_generator' %}">Генератор звітів</a></li>
+            <li><a href="#">Activity 2</a></li>
+          </ul>
+        </div>
+        <div class="menu-section">
+          <button class="menu-button" onclick="toggleSubMenu('helpSubMenu')">
+            Допомога ↴
+          </button>
+          <ul class="sub-menu" id="helpSubMenu">
+            <li><a href="#">Питання та відповіді</a></li>
+            <li><a href="#">Контакти</a></li>
+          </ul>
+        </div>
+        <div class="menu-section">
+          <button class="menu-button" onclick="toggleSubMenu('profileSubMenu')">
+            admin ↴
+          </button>
+          <ul class="sub-menu" id="profileSubMenu">
+            <li><a href="#">Профіль</a></li>
+            <li><a href="#">Налаштування</a></li>
+          </ul>
+        </div>
+      </div>  
+    </div>
+    {% block content %}
+    <div class="container">
+        <h1>Звіт за період: {{ date_from }} - {{ date_to }}</h1>
+        <h2>{{ operation_type }}</h2>
+        <div class="content-container">
+            <div class="table-container">
+                <form method="post" action="{% url 'report_template' date_from=date_from date_to=date_to operation_type=operation_type category=category.id|default:0 %}">
+                    {% csrf_token %}
+                    <div class="table-background">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Категорія</th>
+                                    <th>Сума</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for transaction in transactions %}
+                                    <tr>
+                                        <td>{{ transaction.category.name }}</td>
+                                        <td>{{ transaction.amount }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>Всього:</td>
+                                    <td>{{ total_amount }}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div id="container" style="height: 300px; width: 100%;"></div>
+            <button type="button" id="chartButton" class="diagram-button">
+              <img src="{% static 'images/diagram_menu.png' %}" alt="Змінити діаграму">
+          </button>
+        </div>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+              function renderPieChart() {
+                  Highcharts.chart('container', {
+                      title: {
+                          text: 'Розподіл витрат за період'
+                      },
+                      series: [{
+                          type: 'pie',
+                          data: [
+                              {% for transaction in transactions %}
+                                  {
+                                      name: '{{ transaction.category.name }}',
+                                      y: {{ transaction.amount }}
+                                  },
+                              {% endfor %}
+                          ]
+                      }]
+                  });
+              }
+      
+              function renderLineChart() {
+                  Highcharts.chart('container', {
+                      title: {
+                          text: 'Графік витрат за період'
+                      },
+                      xAxis: {
+                          categories: [
+                              {% for transaction in transactions %}
+                                  '{{ transaction.date|date:"Y-m-d" }}',
+                              {% endfor %}
+                          ]
+                      },
+                      series: [{
+                          type: 'line',
+                          data: [
+                              {% for transaction in transactions %}
+                                  {{ transaction.amount }},
+                              {% endfor %}
+                          ]
+                      }]
+                  });
+              }
+      
+              renderPieChart();
+      
+              $('#chartButton').on('click', function () {
+                  if ($('#container').highcharts().series[0].type === 'pie') {
+                      renderLineChart();
+                  } else {
+                      renderPieChart();
+                  }
+              });
+          });
+      </script>
+      
+    </div>
+{% endblock %}
+</body>
+</html>
